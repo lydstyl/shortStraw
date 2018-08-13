@@ -1,0 +1,70 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>courtePaille</title>
+    <style>
+        body{
+            width: 320px;
+            margin: auto;
+        }
+        h1{
+            text-align: center;
+        }
+        #addChoice{
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        #choose{
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Courte Paille</h1>
+    <div>Ajouter un choix</div>
+    <input id="addChoice" type="text">
+    <div>Les choix :</div>
+    <ul>
+
+    </ul>
+    <input id="choose" type="button" value="Tirer à la courte paille">
+    <div id="winner"></div>
+</body>
+<script>
+    let addChoice = document.getElementById('addChoice');
+    let ul = document.querySelector('ul');
+    let choose = document.getElementById('choose');
+    let winner = document.getElementById('winner');
+    let liNb = 0;
+    /**
+    * Create a choice with an li in the ul
+    */
+    function createLiInUl(element) {
+        let li = document.createElement('li');
+        liNb ++;
+        li.setAttribute('class','item' + liNb);
+        ul.appendChild(li);
+        t = document.createTextNode(element);
+        li.innerHTML=li.innerHTML + element;
+    }
+    /**
+    * Returns a random integer between min (inclusive) and max (inclusive)
+    * Using Math.round() will give you a non-uniform distribution!
+    */
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    addChoice.addEventListener('change', () => {
+        createLiInUl(addChoice.value);
+        addChoice.value = '';
+    });
+    choose.addEventListener("click", () => {
+        let nb = document.querySelectorAll('ul li').length;
+        let choice = getRandomInt(1, nb);
+        choice = document.querySelector('li:nth-child(' + choice + ')').innerHTML;
+        winner.innerHTML = 'Le choix gagnant est : ' + choice;
+    }, false);
+</script>
+</html>
